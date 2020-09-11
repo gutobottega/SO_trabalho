@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class CPU {
 
     public enum Opcode {
@@ -22,6 +24,7 @@ public class CPU {
     private Interrupts irpt; 	// durante instrucao, interrupcao pode ser sinalizada
     private int base;   		// base e limite de acesso na memoria
     private int limite; // por enquanto toda memoria pode ser acessada pelo processo rodando
+    private LinkedList<Integer> pagsProg;
     // ATE AQUI: contexto da CPU - tudo que precisa sobre o estado de um processo
     // para executar
     // nas proximas versoes isto pode modificar, e vai permitir salvar e restaurar
@@ -49,11 +52,32 @@ public class CPU {
         return true;
     }
 
-    public void run() { 		// execucao da CPU supoe que o contexto da CPU, vide acima, esta devidamente setado
+    private PosMemoria getPosMem(int pos){
+        int pag = pos / 16;
+        int ofsset = pos % 16;
+        if(pag!=0 && ofsset == 0){
+            pag--;
+        }
+        pos = pagsProg.get(pag);
+        return gm.getMem((pos * 16) + ofsset);
+    }
+
+    private void setPosMem(PosMemoria memo, int pos){
+        int pag = pos / 16;
+        int ofsset = pos % 16;
+        if(pag!=0 && ofsset == 0){
+            pag--;
+        }
+        pos = pagsProg.get(pag);
+        gm.setMem(memo , (pos * 16) + ofsset);
+    }
+
+    public void run(LinkedList<Integer> prog) { 		// execucao da CPU supoe que o contexto da CPU, vide acima, esta devidamente setado
+        pagsProg = prog;
         while (true) { 			// ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             // FETCH
             if (legal(pc)) { 	// pc valido
-                ir = m[pc]; 	// busca posicao da memoria apontada por pc, guarda em ir
+                ir = getPosMem(pc); 	// busca posicao da memoria apontada por pc, guarda em ir
                 // EXECUTA INSTRUCAO NO ir
                 switch (ir.opc) { // DADO,JMP,JMPI,JMPIG,JMPIL,JMPIE,ADDI,SUBI,ANDI,ORI,LDI,LDD,STD,ADD,SUB,MULT,LDX,STX,SWAP,STOP;
 
@@ -64,9 +88,11 @@ public class CPU {
 
                     case STD: // [A] ← Rs
                         if (legal(ir.p)) {
-                            m[ir.p].opc = Opcode.DADO;
-                            m[ir.p].p = reg[ir.r1];
+                            PosMemoria aux = getPosMem(ir.p);
+                            aux.opc = Opcode.DADO;
+                            aux.p = reg[ir.r1];
                             pc++;
+                            setPosMem(aux, ir.p);
                         };
                         break;
 
@@ -82,9 +108,11 @@ public class CPU {
 
                     case STX: // [Rd] ←Rs
                         if(legal(ir.r1)){
-                            m[ir.r1].opc = Opcode.DADO;
-                            m[ir.r1].p = reg[ir.r2];
+                            PosMemoria aux = getPosMem(ir.r1);
+                            aux.opc = Opcode.DADO;
+                            aux.p = reg[ir.r2];
                             pc++;
+                            setPosMem(aux, ir.r1);
                         }
                         break;
 
@@ -128,8 +156,9 @@ public class CPU {
 
                     case LDD: //Rd ← [A]
                         if (legal(ir.p)) {
-                            reg[ir.r1] = m[ir.p].p;
+                            reg[ir.r1] = getPosMem(ir.p).p;
                             pc++;
+
                         }
                         break;
 
@@ -139,7 +168,7 @@ public class CPU {
                         break;
 
                     case LDX: //Rd ← [Rs]
-                        reg[ir.r1] = m[ir.r2].p;
+                        reg[ir.r1] = getPosMem(ir.r2).p;
                         pc++;
                         break;
 

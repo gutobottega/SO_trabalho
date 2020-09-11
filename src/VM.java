@@ -2,7 +2,7 @@ public class VM {
 
 	public static void main(String args[]) {
 		VM vm = new VM(1024);
-		vm.prog3();
+		vm.prog1();
 	}
 
 	public GerenciadorMemoria gm;
@@ -17,14 +17,17 @@ public class VM {
 		progs = new Programas();
 	}
 
-	//teste programa 3
-	public void prog3() {
-		progs.paginas.put(3, gm.carga(progs.p3));
+	//aqui criar um metodo chamando cada programa individualmente
+
+	//teste programa 1
+	public void prog1() {
+		progs.paginas.put(1, gm.carga(progs.p1,62));
 		cpu.setContext(0, tamMem - 1, 0);
 		System.out.println("---------------------------------- programa carregado ");
-		gm.dump(0, 18);
+		gm.dumpMem(0, 18);
 		System.out.println("---------------------------------- após execucao ");
-		cpu.run();
-		gm.dump(0, 18);
+		//manda rodar o programa 1;
+		cpu.run(progs.paginas.get(1));
+		gm.dumpMem(0, 18);
 	}
 }

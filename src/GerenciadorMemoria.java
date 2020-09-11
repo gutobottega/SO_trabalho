@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 public class GerenciadorMemoria {
-    public PosMemoria[] m;
+    private PosMemoria[] m;
     public boolean[] liberado;
 
     GerenciadorMemoria(int tamMem){
@@ -14,15 +14,15 @@ public class GerenciadorMemoria {
         };
     }
 
-    public LinkedList<Integer> carga(PosMemoria[] p) {
-        int count = 0;
-        int tamPag = p.length/16;
-        int offset = p.length%16;
+    public LinkedList<Integer> carga(PosMemoria[] p, int tamanho) {
+        int tamPag = tamanho/16;
+        int offset = tamanho%16;
         if(offset != 0) tamPag++;
         LinkedList<Integer> ret = new LinkedList();
 
         //calcula a qntidade necessária de paginas e percorre todas
         for (int i = 0; i < tamPag; i++) {
+            int count = 0;
             //procura frames liberados
             for (int j = 0; j < liberado.length; j++) {
                 //se frame estiver liberado, adiciona ao indice de paginas
@@ -43,19 +43,32 @@ public class GerenciadorMemoria {
                             count++;
                         }
                     }
+                    break;
                 }
             }
         }
         return ret;
     }
 
-    public void dump(int ini, int fim) {
-        for (int i = ini; i < fim; i++) {
-            System.out.print(i); System.out.print(":  ");  dump(m[i]);
+    public void dumpProg(LinkedList<Integer> lst){
+        //Dump do programa recebe a lista de paginas e acessa os frames da memoria
+        for (int pag: lst) {
+            int pos = pag*16;
+            for (int k = 0; k < 16; k++) {
+                System.out.print(pos+k); System.out.print(":  ");
+                dumpMem(m[pos+k]);
+            }
         }
     }
 
-    public void dump(PosMemoria w) {
+    public void dumpMem(int ini, int fim) {
+        for (int i = ini; i < fim; i++) {
+            System.out.print(i); System.out.print(":  ");
+            dumpMem(m[i]);
+        }
+    }
+
+    public void dumpMem(PosMemoria w) {
         System.out.print("[ ");
         System.out.print(w.opc); System.out.print(", ");
         System.out.print(w.r1);  System.out.print(", ");
@@ -63,4 +76,11 @@ public class GerenciadorMemoria {
         System.out.print(w.p);   System.out.println("  ] ");
     }
 
+    public void setMem(PosMemoria mem, int pos) {
+        m[pos] = mem;
+    }
+
+    public PosMemoria getMem(int pos) {
+        return m[pos];
+    }
 }

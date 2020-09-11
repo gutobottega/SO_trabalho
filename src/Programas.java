@@ -2,6 +2,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+//Contem todos programas e mais um map que liga o numero do programa ao array de paginas dele
+
 public class Programas {
 
     Programas(){
