@@ -24,17 +24,16 @@ public class Programas {
             new PosMemoria(CPU.Opcode.ADD, 2, 0, -1),
             new PosMemoria(CPU.Opcode.LDI, 0, -1, 0),
             new PosMemoria(CPU.Opcode.ADD, 0, 1, -1),
-            new PosMemoria(CPU.Opcode.LDI, 1, 2, -1),
+            new PosMemoria(CPU.Opcode.ADD, 1, 2, -1),
             new PosMemoria(CPU.Opcode.STX, 7, 1, -1),
-            new PosMemoria(CPU.Opcode.ADD, 7, -1, 1),
+            new PosMemoria(CPU.Opcode.ADDI, 7, -1, 1),
             new PosMemoria(CPU.Opcode.SUB, 6, 7, -1),
-            new PosMemoria(CPU.Opcode.JMPIG, 5, 7, -1),
+            new PosMemoria(CPU.Opcode.JMPIG, 5, 6, -1),
             new PosMemoria(CPU.Opcode.STOP, -1, -1, -1),
     };
 
-    //faz o load do valor da posição 49 da memoria
     public PosMemoria[] p2 = new PosMemoria[] {
-            new PosMemoria(CPU.Opcode.LDD, 0, -1, 49),
+            new PosMemoria(CPU.Opcode.LDI, 0, -1, 7),
             new PosMemoria(CPU.Opcode.LDI, 1, -1, 22),//posiçãoi para fim 1
             new PosMemoria(CPU.Opcode.JMPIL, 1, 0, -1),//comparação
             new PosMemoria(CPU.Opcode.ADDI, 0, 0, 51),//adiciona o indice de memoria no nmr de elementos para saber o fim da memoria

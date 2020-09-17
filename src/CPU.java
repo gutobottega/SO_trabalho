@@ -18,8 +18,7 @@ public class CPU {
 
 
     // característica do processador: contexto da CPU ...
-    private int pc; 			// ... composto de program counter,
-    private PosMemoria ir; 			// instruction register,
+    private int pc;	// instruction register,
     private int[] reg;       	// registradores da CPU
     private Interrupts irpt; 	// durante instrucao, interrupcao pode ser sinalizada
     private int base;   		// base e limite de acesso na memoria
@@ -54,22 +53,16 @@ public class CPU {
 
     private PosMemoria getPosMem(int pos){
         int pag = pos / 16;
-        int ofsset = pos % 16;
-        if(pag!=0 && ofsset == 0){
-            pag--;
-        }
+        int offset = pos % 16;
         pos = pagsProg.get(pag);
-        return gm.getMem((pos * 16) + ofsset);
+        return gm.getMem((pos * 16) + offset);
     }
 
     private void setPosMem(PosMemoria memo, int pos){
         int pag = pos / 16;
-        int ofsset = pos % 16;
-        if(pag!=0 && ofsset == 0){
-            pag--;
-        }
+        int offset = pos % 16;
         pos = pagsProg.get(pag);
-        gm.setMem(memo , (pos * 16) + ofsset);
+        gm.setMem(memo , (pos * 16) + offset);
     }
 
     public void run(LinkedList<Integer> prog) { 		// execucao da CPU supoe que o contexto da CPU, vide acima, esta devidamente setado
@@ -77,7 +70,7 @@ public class CPU {
         while (true) { 			// ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
             // FETCH
             if (legal(pc)) { 	// pc valido
-                ir = getPosMem(pc); 	// busca posicao da memoria apontada por pc, guarda em ir
+                PosMemoria ir = getPosMem(pc); 	// busca posicao da memoria apontada por pc, guarda em ir
                 // EXECUTA INSTRUCAO NO ir
                 switch (ir.opc) { // DADO,JMP,JMPI,JMPIG,JMPIL,JMPIE,ADDI,SUBI,ANDI,ORI,LDI,LDD,STD,ADD,SUB,MULT,LDX,STX,SWAP,STOP;
 
@@ -108,11 +101,11 @@ public class CPU {
 
                     case STX: // [Rd] ←Rs
                         if(legal(ir.r1)){
-                            PosMemoria aux = getPosMem(ir.r1);
+                            PosMemoria aux = getPosMem(reg[ir.r1]);
                             aux.opc = Opcode.DADO;
                             aux.p = reg[ir.r2];
                             pc++;
-                            setPosMem(aux, ir.r1);
+                            setPosMem(aux, reg[ir.r1]);
                         }
                         break;
 

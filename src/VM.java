@@ -17,9 +17,16 @@ public class VM {
 		progs = new Programas();
 	}
 
+	public void prog1(){
+		cpu.setContext(0, tamMem - 1, 0);
+		progs.paginas.put(1, gm.aloca(progs.p1,62));
+		progs.paginas.put(2, gm.aloca(progs.p2,62));
+		cpu.run(progs.paginas.get(1));
+	}
+
 	//aqui criar um metodo chamando cada programa individualmente
 
-	//teste programa 1
+	/*/teste programa 1
 	public void prog1() {
 		progs.paginas.put(1, gm.carga(progs.p1,62));
 		cpu.setContext(0, tamMem - 1, 0);
@@ -29,5 +36,5 @@ public class VM {
 		//manda rodar o programa 1;
 		cpu.run(progs.paginas.get(1));
 		gm.dumpMem(0, 18);
-	}
+	}*/
 }

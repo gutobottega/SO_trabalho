@@ -14,15 +14,20 @@ public class GerenciadorMemoria {
         };
     }
 
-    public LinkedList<Integer> carga(PosMemoria[] p, int tamanho) {
+    public LinkedList<Integer> aloca(PosMemoria[] p, int tamanho) {
         int tamPag = tamanho/16;
         int offset = tamanho%16;
-        if(offset != 0) tamPag++;
+        int tamaux = p.length/16;
+        int offsetaux = p.length%16;
+        if(offset > 0){
+            tamPag++;
+        }
         LinkedList<Integer> ret = new LinkedList();
+
+        int count = 0;
 
         //calcula a qntidade necessária de paginas e percorre todas
         for (int i = 0; i < tamPag; i++) {
-            int count = 0;
             //procura frames liberados
             for (int j = 0; j < liberado.length; j++) {
                 //se frame estiver liberado, adiciona ao indice de paginas
@@ -32,15 +37,17 @@ public class GerenciadorMemoria {
                     ret.add(j);
                     //se for a ultima pagina e tiver offset, usa o offset como referencia para transferir os dados para memoria
                     //se não usa como referencia 16 posições para lançar os dados para memoria.
-                    if(i == tamPag - 1 && offset != 0){
-                        for (int k = 0; k < offset; k++) {
-                            m[pos+k] = p[count];
-                            count++;
-                        }
-                    }else {
-                        for (int k = 0; k < 16; k++) {
-                            m[pos+k] = p[count];
-                            count++;
+                    if(i <= tamaux){
+                        if( i == tamaux && offset != 0) {
+                            for (int k = 0; k < offsetaux; k++) {
+                                m[pos + k] = p[count];
+                                count++;
+                            }
+                        }else {
+                            for (int k = 0; k < 16; k++) {
+                                m[pos+k] = p[count];
+                                count++;
+                            }
                         }
                     }
                     break;
@@ -48,6 +55,16 @@ public class GerenciadorMemoria {
             }
         }
         return ret;
+    }
+
+    public void desaloca(LinkedList<Integer> list){
+        list.forEach(item -> {
+            liberado[item] = true;
+            int pos = item * 16;
+            for (int k = 0; k < 16; k++) {
+                m[pos+k] = new PosMemoria(CPU.Opcode.___,-1,-1,-1);
+            }
+        });
     }
 
     public void dumpProg(LinkedList<Integer> lst){

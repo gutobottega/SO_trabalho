@@ -1,116 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="358b55c9-6ee0-444c-bdc5-061870e7012f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SO_trabalho/CPU$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SO_trabalho/CPU$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SO_trabalho/CPU.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SO_trabalho/CPU.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SO_trabalho/GerenciadorMemoria.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SO_trabalho/GerenciadorMemoria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SO_trabalho/Programas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SO_trabalho/Programas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SO_trabalho/VM.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SO_trabalho/VM.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CPU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CPU.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GerenciadorMemoria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GerenciadorMemoria.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Programas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Programas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VM.java" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="660076607">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="12" />
-          <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="2" />
-          <entry key="project.open.time.5" value="2" />
-          <entry key="project.open.time.6" value="3" />
-          <entry key="project.open.time.7" value="3" />
-          <entry key="project.opened" value="12" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="java" value="16" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="JAVA" value="16" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="20" />
-          <entry key="java" value="8191" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="JAVA" value="8191" />
-          <entry key="PLAIN_TEXT" value="20" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
-  <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/CPU.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="576">
-                  <caret line="81" selection-start-line="81" selection-end-line="81" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/GerenciadorMemoria.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="201">
-                  <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#2723#2724#0" expanded="true" />
-                    <element signature="e#2746#2747#0" expanded="true" />
-                    <element signature="e#2794#2795#0" expanded="true" />
-                    <element signature="e#2823#2824#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/VM.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="354">
-                  <caret line="29" selection-start-line="29" selection-end-line="29" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Programas.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="527">
-                  <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="52" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#125#126#0" expanded="true" />
-                    <element signature="e#172#173#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -119,64 +43,26 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>Opcode</find>
-    </findStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/Word.java" />
-        <option value="$PROJECT_DIR$/src/Auxi.java" />
-        <option value="$PROJECT_DIR$/src/Memory.java" />
-        <option value="$PROJECT_DIR$/src/Memoria.java" />
-        <option value="$PROJECT_DIR$/src/PosMemoria.java" />
-        <option value="$PROJECT_DIR$/src/Programas.java" />
-        <option value="$PROJECT_DIR$/src/VM.java" />
-        <option value="$PROJECT_DIR$/src/GerenciadorMemoria.java" />
-        <option value="$PROJECT_DIR$/src/CPU.java" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="864" />
-    <option name="width" value="1703" />
-    <option name="height" value="1057" />
-  </component>
+  <component name="ProjectId" id="1hYtMRcEg4ioJthNqvHD2oRzpU0" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="SO_trabalho" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SO_trabalho" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SO_trabalho" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SO_trabalho" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1599857534369" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../VerValEx1" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="full.screen.before.presentation.mode" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -185,18 +71,6 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Augusto\IdeaProjects\SO_trabalho\src" />
     </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
   </component>
   <component name="RunManager" selected="Application.VM">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
@@ -226,6 +100,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -248,138 +123,127 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="864" y="0" width="1703" height="1057" extended-state="0" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.10606061" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36511377" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.34669557" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.12124463" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3291714" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.10606061" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.36549374" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.4723727" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3291714" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.12124463" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3291714" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Maven Projects" order="7" />
-    </layout-to-restore>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1060" y="275" key="FileChooserDialogImpl" timestamp="1600266395598">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="1060" y="275" key="FileChooserDialogImpl/0.0.2560.1040@0.0.2560.1040" timestamp="1600266395598" />
+    <state width="2517" height="179" key="GridCell.Tab.0.bottom" timestamp="1600319774060">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.bottom.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.bottom.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="2517" height="179" key="GridCell.Tab.0.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1600319774060" />
+    <state width="2517" height="179" key="GridCell.Tab.0.center" timestamp="1600319774060">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.center.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.center.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="2517" height="179" key="GridCell.Tab.0.center/0.0.2560.1040@0.0.2560.1040" timestamp="1600319774060" />
+    <state width="2517" height="179" key="GridCell.Tab.0.left" timestamp="1600319774060">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.left.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.left.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="2517" height="179" key="GridCell.Tab.0.left/0.0.2560.1040@0.0.2560.1040" timestamp="1600319774060" />
+    <state width="2517" height="179" key="GridCell.Tab.0.right" timestamp="1600319774060">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.right.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.0.right.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="2517" height="179" key="GridCell.Tab.0.right/0.0.2560.1040@0.0.2560.1040" timestamp="1600319774060" />
+    <state width="761" height="705" key="GridCell.Tab.1.bottom" timestamp="1600319764428">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.bottom.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.bottom.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="761" height="705" key="GridCell.Tab.1.bottom/0.0.2560.1040@0.0.2560.1040" timestamp="1600319764428" />
+    <state width="761" height="705" key="GridCell.Tab.1.center" timestamp="1600319764428">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.center.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.center.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="761" height="705" key="GridCell.Tab.1.center/0.0.2560.1040@0.0.2560.1040" timestamp="1600319764428" />
+    <state width="761" height="705" key="GridCell.Tab.1.left" timestamp="1600319764428">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.left.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.left.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="761" height="705" key="GridCell.Tab.1.left/0.0.2560.1040@0.0.2560.1040" timestamp="1600319764428" />
+    <state width="761" height="705" key="GridCell.Tab.1.right" timestamp="1600319764428">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.right.inPresentationMode" timestamp="1600266516671">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state width="1579" height="220" key="GridCell.Tab.1.right.inPresentationMode/0.0.2560.1040@0.0.2560.1040" timestamp="1600266516671" />
+    <state width="761" height="705" key="GridCell.Tab.1.right/0.0.2560.1040@0.0.2560.1040" timestamp="1600319764428" />
+    <state x="313" y="168" key="SettingsEditor" timestamp="1600266622817">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="313" y="168" key="SettingsEditor/0.0.2560.1040@0.0.2560.1040" timestamp="1600266622817" />
+    <state x="676" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600311147627">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="676" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1040@0.0.2560.1040" timestamp="1600311147627" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/VM.java</url>
-          <line>29</line>
-          <properties />
-          <option name="timeStamp" value="14" />
+          <url>file://$PROJECT_DIR$/src/CPU.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/CPU.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/CPU.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Main.java" />
-    <entry file="file://$USER_HOME$/Desktop/VM.java" />
-    <entry file="file://$PROJECT_DIR$/src/Auxi.java" />
-    <entry file="file://$PROJECT_DIR$/src/PosMemoria.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="7" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk-14.0.1/lib/src.zip!/java.base/jdk/internal/reflect/DelegatingMethodAccessorImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GerenciadorMemoria.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="23" column="42" lean-forward="true" selection-start-line="23" selection-start-column="42" selection-end-line="23" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2723#2724#0" expanded="true" />
-            <element signature="e#2746#2747#0" expanded="true" />
-            <element signature="e#2794#2795#0" expanded="true" />
-            <element signature="e#2823#2824#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/VM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Programas.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="36" column="50" lean-forward="true" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#125#126#0" expanded="true" />
-            <element signature="e#172#173#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CPU.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="81" selection-start-line="81" selection-end-line="81" />
-        </state>
-      </provider>
-    </entry>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="prog" />
+        <watch expression="((CPU)this).gm.m[51]" custom="CPU" />
+        <watch expression="((GerenciadorMemoria)this).m" custom="GerenciadorMemoria" />
+        <watch expression="m[6]" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="masterDetails">
     <states>
