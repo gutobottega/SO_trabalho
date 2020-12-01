@@ -1,194 +1,314 @@
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Semaphore;
 
-public class CPU {
+public class CPU extends Thread{
 
     public enum Opcode {
-        DADO, ___,		    // se memoria nesta posicao tem um dado, usa DADO, se nao usada ee NULO
-        JMP, JMPI, JMPIG, JMPIL, JMPIE, ADDI, SUBI, ANDI, ORI, LDI, LDD, STD, ADD, SUB, MULT, LDX, STX, SWAP, STOP;
+        DADO, ___, TRAP,
+        JMP, JMPI, JMPIG,
+        JMPIL, JMPIE, ADDI,
+        SUBI, ANDI, ORI, LDI,
+        LDD, STD, ADD, SUB,
+        MULT, LDX, STX, SWAP, STOP;
     }
 
-
-
-    // --------------------- definicoes da CPU ---------------------------------------------------------------
-    private enum Interrupts {  // possiveis interrupcoes
-        noInterrupt, intEnderecoInvalido, intInstrucaoInvalida, intSTOP;
+    public enum Interrupts {
+        noInterrupt, intEnderecoInvalido, intInstrucaoInvalida, intSTOP, timeout, intIO, intTRAP
     }
 
-
-
-
-    // característica do processador: contexto da CPU ...
-    private int pc;	// instruction register,
-    private int[] reg;       	// registradores da CPU
-    private Interrupts irpt; 	// durante instrucao, interrupcao pode ser sinalizada
-    private int base;   		// base e limite de acesso na memoria
-    private int limite; // por enquanto toda memoria pode ser acessada pelo processo rodando
+    public Semaphore semaCPU;
+    private int pc;
+    private int[] reg;
+    private int regIO1;
+    private int regIO2;
+    private Map<Interrupts, Boolean> flags;
+   private int base;
+    private int limite;
     private LinkedList<Integer> pagsProg;
-    // ATE AQUI: contexto da CPU - tudo que precisa sobre o estado de um processo
-    // para executar
-    // nas proximas versoes isto pode modificar, e vai permitir salvar e restaurar
-    // um processo na CPU
+    private ProcessControlBlock processoRodando;
+    private Escalonador escalonador;
+    private Console console;
+    private int timer;
+    private GerenciadorMemoria gm;
+    private GerenciadorProcesso gp;
+    private boolean rodando;
 
-    private GerenciadorMemoria gm;   // CPU acessa MEMORIA, guarda referencia 'm' a ela. memoria nao muda. ee sempre a mesma.
-
-    public CPU(GerenciadorMemoria gm) {     // ref a MEMORIA passada na criacao da CPU
-        this.gm = gm; 				// usa o atributo 'm' para acessar a memoria.
-        reg = new int[8]; 		// aloca o espaço dos registradores
+    public CPU(GerenciadorMemoria gm, GerenciadorProcesso gp, Escalonador escalonador, Console console) {
+        semaCPU = new Semaphore(0 );
+        flags = new ConcurrentHashMap<>();
+        this.gp = gp;
+        this.escalonador = escalonador;
+        this.console = console;
+        this.base = 0;
+        this.limite = gm.tamMemoria() - 1;
+        this.gm = gm;
+        this.reg = new int[8];
+        timer = 5;
+        buildFlags();
+        start();
     }
 
-    public void setContext(int _base, int _limite, int _pc) {  // no futuro esta funcao vai ter que ser
-        base = _base;                                          //expandida para setar todo contexto de execucao,
-        limite = _limite;									   // agora,  setamos somente os registradores base,
-        pc = _pc;                                              // limite e pc (deve ser zero nesta versao)
-        irpt = Interrupts.noInterrupt;                         // reset da interrupcao registrada
+    private void buildFlags(){
+        flags.put(CPU.Interrupts.intEnderecoInvalido, false);
+        flags.put(CPU.Interrupts.intInstrucaoInvalida, false);
+        flags.put(CPU.Interrupts.intIO, false);
+        flags.put(CPU.Interrupts.intSTOP, false);
+        flags.put(CPU.Interrupts.intTRAP, false);
+        flags.put(CPU.Interrupts.timeout, false);
+        flags.put(CPU.Interrupts.noInterrupt, true);
     }
 
-    private boolean legal(int e) {                             // todo acesso a memoria tem que ser verificado
-        if ((e < base) || (e > limite)) {                      //  valida se endereco 'e' na memoria ee posicao legal
-            irpt = Interrupts.intEnderecoInvalido;             //  caso contrario ja liga interrupcao
+    public void setContext(ProcessControlBlock pcb) {
+        pc = pcb.pc;
+        reg = pcb.reg;
+        pagsProg = pcb.paginas;
+        processoRodando = pcb;
+    }
+
+    private boolean legal(int e) {
+        if ((e < base) || (e > limite)) {
+            flags.replace(Interrupts.intEnderecoInvalido, true);
+            flags.replace(Interrupts.noInterrupt, false);
             return false;
         };
         return true;
     }
 
     private PosMemoria getPosMem(int pos){
-        int pag = pos / 16;
-        int offset = pos % 16;
-        pos = pagsProg.get(pag);
-        return gm.getMem((pos * 16) + offset);
+        if(legal(pos)) {
+            int pag = pos / 16;
+            int offset = pos % 16;
+            pos = pagsProg.get(pag);
+            return gm.getMem((pos * 16) + offset);
+        }else return null;
     }
 
     private void setPosMem(PosMemoria memo, int pos){
-        int pag = pos / 16;
-        int offset = pos % 16;
-        pos = pagsProg.get(pag);
-        gm.setMem(memo , (pos * 16) + offset);
+        if(legal(pos)){
+            int pag = pos / 16;
+            int offset = pos % 16;
+            pos = pagsProg.get(pag);
+            gm.setMem(memo , (pos * 16) + offset);
+        }
     }
 
-    public void run(LinkedList<Integer> prog) { 		// execucao da CPU supoe que o contexto da CPU, vide acima, esta devidamente setado
-        pagsProg = prog;
-        while (true) { 			// ciclo de instrucoes. acaba cfe instrucao, veja cada caso.
-            // FETCH
-            if (legal(pc)) { 	// pc valido
-                PosMemoria ir = getPosMem(pc); 	// busca posicao da memoria apontada por pc, guarda em ir
-                // EXECUTA INSTRUCAO NO ir
-                switch (ir.opc) { // DADO,JMP,JMPI,JMPIG,JMPIL,JMPIE,ADDI,SUBI,ANDI,ORI,LDI,LDD,STD,ADD,SUB,MULT,LDX,STX,SWAP,STOP;
+    private void saveContext(){
+        processoRodando.pc = pc;
+        processoRodando.reg = reg;
+        processoRodando.paginas = pagsProg;
+    }
 
-                    case LDI: // Rd ← k
-                        reg[ir.r1] = ir.p;
-                        pc++;
-                        break;
+    public void interruptCPU(Interrupts interrupt){
+        flags.replace(Interrupts.noInterrupt, false);
+        flags.replace(interrupt, true);
+        if (!rodando) checkInterruption();
+    }
 
-                    case STD: // [A] ← Rs
-                        if (legal(ir.p)) {
-                            PosMemoria aux = getPosMem(ir.p);
-                            aux.opc = Opcode.DADO;
-                            aux.p = reg[ir.r1];
+    public void run() {
+
+        while (true) {
+            try {
+                semaCPU.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            rodando = true;
+            while (true) {
+                // FETCH
+                if (legal(pc) && timer > 0) {
+                    timer--;
+                    PosMemoria ir = getPosMem(pc);
+                    PosMemoria aux;
+                    switch (ir.opc) {
+                        case LDI: // Rd ← k
+                            reg[ir.r1] = ir.p;
                             pc++;
-                            setPosMem(aux, ir.p);
-                        };
-                        break;
+                            break;
 
-                    case ADD: // Rd ← Rd + Rs
-                        reg[ir.r1] = reg[ir.r1] + reg[ir.r2];
-                        pc++;
-                        break;
+                        case STD: // [A] ← Rs
+                            aux = getPosMem(ir.p);
+                            if(aux != null) {
+                                aux.opc = Opcode.DADO;
+                                aux.p = reg[ir.r1];
+                                pc++;
+                                setPosMem(aux, ir.p);
+                            }
+                            break;
 
-                    case ADDI: // Rd ← Rd + k
-                        reg[ir.r1] = reg[ir.r1] + ir.p;
-                        pc++;
-                        break;
-
-                    case STX: // [Rd] ←Rs
-                        if(legal(ir.r1)){
-                            PosMemoria aux = getPosMem(reg[ir.r1]);
-                            aux.opc = Opcode.DADO;
-                            aux.p = reg[ir.r2];
+                        case ADD: // Rd ← Rd + Rs
+                            reg[ir.r1] = reg[ir.r1] + reg[ir.r2];
                             pc++;
-                            setPosMem(aux, reg[ir.r1]);
-                        }
-                        break;
+                            break;
 
-                    case SUB: // Rd ← Rd - Rs
-                        reg[ir.r1] = reg[ir.r1] - reg[ir.r2];
-                        pc++;
-                        break;
-
-                    case JMPIG: // If Rc > 0 Then PC ← Rs // Else PC ← PC +1
-                        if(reg[ir.r2] > 0) pc = reg[ir.r1];
-                        else pc++;
-                        break;
-
-                    case JMP: //PC ← k
-                        pc = ir.p;
-                        break;
-
-                    case JMPI: //PC ← Rs
-                        pc = reg[ir.r2];
-                        break;
-
-                    case JMPIE: //if Rc = 0 then PC ← Rs // Else PC ← PC +1
-                        if(reg[ir.r2] == 0) pc = reg[ir.r1];
-                        else pc++;
-                        break;
-
-                    case JMPIL: //if Rc < 0 then PC ← Rs  //Else PC ← PC +1
-                        if(reg[ir.r2] < 0) pc = reg[ir.r1];
-                        else pc++;
-                        break;
-
-                    case ANDI: //Rd ←Rd AND k
-                        reg[ir.r1] = reg[ir.r1] & ir.p;
-                        pc++;
-                        break;
-
-                    case ORI: //Rd ←Rd OR k
-                        reg[ir.r1] = reg[ir.r1] | ir.p;
-                        pc++;
-                        break;
-
-                    case LDD: //Rd ← [A]
-                        if (legal(ir.p)) {
-                            reg[ir.r1] = getPosMem(ir.p).p;
+                        case ADDI: // Rd ← Rd + k
+                            reg[ir.r1] = reg[ir.r1] + ir.p;
                             pc++;
+                            break;
 
-                        }
-                        break;
+                        case STX: // [Rd] ←Rs
+                            aux = getPosMem(reg[ir.r1]);
+                            if(aux != null) {
+                                aux.opc = Opcode.DADO;
+                                aux.p = reg[ir.r2];
+                                pc++;
+                                setPosMem(aux, reg[ir.r1]);
+                            }
+                            break;
 
-                    case MULT: //Rd ← Rd * Rs
-                        reg[ir.r1] = reg[ir.r1] * reg[ir.r2];
-                        pc++;
-                        break;
+                        case SUB: // Rd ← Rd - Rs
+                            reg[ir.r1] = reg[ir.r1] - reg[ir.r2];
+                            pc++;
+                            break;
 
-                    case LDX: //Rd ← [Rs]
-                        reg[ir.r1] = getPosMem(ir.r2).p;
-                        pc++;
-                        break;
+                        case JMPIG: // If Rc > 0 Then PC ← Rs // Else PC ← PC +1
+                            if (reg[ir.r2] > 0) pc = reg[ir.r1];
+                            else pc++;
+                            break;
 
-                    case SWAP: //Rd7←Rd3, Rd6←Rd2, Rd5←Rd1, Rd4←Rd0
-                        reg[7] = reg[3];
-                        reg[6] = reg[2];
-                        reg[5] = reg[1];
-                        reg[4] = reg[0];
-                        break;
+                        case JMP: //PC ← k
+                            pc = ir.p;
+                            break;
 
-                    case STOP: //  para a execucao
-                        irpt = Interrupts.intSTOP;
-                        break;
+                        case JMPI: //PC ← Rs
+                            pc = reg[ir.r2];
+                            break;
 
-                    case DADO:
-                        break;
+                        case JMPIE: //if Rc = 0 then PC ← Rs // Else PC ← PC +1
+                            if (reg[ir.r2] == 0) pc = reg[ir.r1];
+                            else pc++;
+                            break;
 
-                    default:
-                        break;
+                        case JMPIL: //if Rc < 0 then PC ← Rs  //Else PC ← PC +1
+                            if (reg[ir.r2] < 0) pc = reg[ir.r1];
+                            else pc++;
+                            break;
+
+                        case ANDI: //Rd ←Rd AND k
+                            reg[ir.r1] = reg[ir.r1] & ir.p;
+                            pc++;
+                            break;
+
+                        case ORI: //Rd ←Rd OR k
+                            reg[ir.r1] = reg[ir.r1] | ir.p;
+                            pc++;
+                            break;
+
+                        case LDD: //Rd ← [A]
+                            aux = getPosMem(ir.p);
+                            if(aux != null) {
+                                reg[ir.r1] = aux.p;
+                                pc++;
+                            }
+                            break;
+
+                        case MULT: //Rd ← Rd * Rs
+                            reg[ir.r1] = reg[ir.r1] * reg[ir.r2];
+                            pc++;
+                            break;
+
+                        case LDX: //Rd ← [Rs]
+                            aux = getPosMem(ir.r2);
+                            if(aux != null) {
+                                reg[ir.r1] = aux.p;
+                                pc++;
+                            }
+                            break;
+
+                        case SWAP: //Rd7←Rd3, Rd6←Rd2, Rd5←Rd1, Rd4←Rd0
+                            reg[7] = reg[3];
+                            reg[6] = reg[2];
+                            reg[5] = reg[1];
+                            reg[4] = reg[0];
+                            break;
+
+                        case STOP: //  para a execucao
+                            flags.replace(Interrupts.intSTOP, true);
+                            flags.replace(Interrupts.noInterrupt, false);
+                            break;
+
+                        case TRAP:
+                            regIO1 = ir.r1;
+                            regIO2 = reg[ir.r2];
+                            flags.replace(Interrupts.intTRAP, true);
+                            flags.replace(Interrupts.noInterrupt, false);
+                            pc++;
+                            break;
+
+                        case DADO:
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                if (timer == 0) {
+                    flags.replace(Interrupts.timeout, true);
+                    flags.replace(Interrupts.noInterrupt, false);
+                }
+
+                if (checkInterruption()){
+                    rodando = false;
+                    break;
                 }
             }
-            // verifica int - agora simplesmente para programa em qualquer caso
-            if (!(irpt == Interrupts.noInterrupt)) {
-                System.out.print("Interrupcao ");
-                System.out.println(irpt);
-                break; // break sai do loop da cpu
+        }
+    }
+
+    private boolean checkInterruption(){
+        boolean ret = false;
+        if (!flags.get(Interrupts.noInterrupt)) {
+            timer = 5;
+            if (flags.get(Interrupts.timeout)) {
+                flags.replace(Interrupts.timeout, false);
+                saveContext();
+                escalonador.addProntos(processoRodando);
+                escalonador.semaSch.release();
+                ret = true;
+            } else if (flags.get(Interrupts.intTRAP)) {
+                flags.replace(Interrupts.intTRAP, false);
+                saveContext();
+                escalonador.addBloqs(processoRodando);
+                boolean read = regIO1 == 1 ? true : false;
+                PosMemoria pos = getPosMem(regIO2);
+                console.add(read, pos, processoRodando.id);
+                escalonador.semaSch.release();
+                ret = true;
+            } else if (flags.get(Interrupts.intIO)) {
+                flags.replace(Interrupts.intIO, false);
+                escalonador.liberaBloqueado();
+            } else if (flags.get(Interrupts.intEnderecoInvalido)) {
+                flags.replace(Interrupts.intEnderecoInvalido, false);
+                gp.desalocaProcesso(processoRodando);
+                escalonador.semaSch.release();
+                ret = true;
+            } else if (flags.get(Interrupts.intInstrucaoInvalida)) {
+                flags.replace(Interrupts.intInstrucaoInvalida, false);
+                gp.desalocaProcesso(processoRodando);
+                escalonador.semaSch.release();
+                ret = true;
+            } else if (flags.get(Interrupts.intSTOP)) {
+                flags.replace(Interrupts.intSTOP, false);
+                gp.desalocaProcesso(processoRodando);
+                escalonador.semaSch.release();
+                ret = true;
             }
         }
+        if(!flags.get(Interrupts.timeout)){
+            if(!flags.get(Interrupts.intTRAP)){
+                if(!flags.get(Interrupts.intSTOP)){
+                    if(!flags.get(Interrupts.intIO)){
+                        if(!flags.get(Interrupts.intInstrucaoInvalida)){
+                            if(!flags.get(Interrupts.intEnderecoInvalido)){
+                                flags.replace(Interrupts.noInterrupt, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return ret;
     }
 }

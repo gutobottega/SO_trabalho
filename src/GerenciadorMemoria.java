@@ -1,11 +1,14 @@
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.concurrent.Semaphore;
 
 public class GerenciadorMemoria {
     private PosMemoria[] m;
-    public boolean[] liberado;
+    private boolean[] liberado;
+    Semaphore semGM;
 
     GerenciadorMemoria(int tamMem){
+        semGM = new Semaphore(1);
         m = new PosMemoria[tamMem];
         liberado = new boolean[tamMem/16];
         Arrays.fill(liberado, Boolean.TRUE);
@@ -14,7 +17,13 @@ public class GerenciadorMemoria {
         };
     }
 
+    public int tamMemoria(){
+        return this.m.length;
+    }
     public LinkedList<Integer> aloca(PosMemoria[] p, int tamanho) {
+        try {
+            semGM.acquire();
+        } catch (InterruptedException e) {}
         int tamPag = tamanho/16;
         int offset = tamanho%16;
         int tamaux = p.length/16;
@@ -54,10 +63,14 @@ public class GerenciadorMemoria {
                 }
             }
         }
+        semGM.release();
         return ret;
     }
 
     public void desaloca(LinkedList<Integer> list){
+        try {
+            semGM.acquire();
+        } catch (InterruptedException e) {}
         list.forEach(item -> {
             liberado[item] = true;
             int pos = item * 16;
@@ -65,6 +78,7 @@ public class GerenciadorMemoria {
                 m[pos+k] = new PosMemoria(CPU.Opcode.___,-1,-1,-1);
             }
         });
+        semGM.release();
     }
 
     public void dumpProg(LinkedList<Integer> lst){
